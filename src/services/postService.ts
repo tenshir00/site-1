@@ -3,23 +3,38 @@ import { Post } from '../types/Post'
 import { slugify } from '../utils/slugify'
 
 // Map database category names to frontend categories
-function mapCategoryName(dbCategoryName: string): string {
-  const normalized = dbCategoryName.toLowerCase().trim()
-  
-  switch (normalized) {
-    case 'tech':
-    case 'technology':
-      return 'technology'
-    case 'finance':
-    case 'financial':
-      return 'finance'
-    case 'personal':
-      return 'personal'
-    case 'mixed':
-    case 'general':
-      return 'mixed'
-    default:
-      return 'mixed'
+static async getPostBySlug(slug: string): Promise<Post | null> {
+  try {
+    const { data: post, error } = await supabase
+      .from('writing_posts')
+      .select(`
+        id,
+        title,
+        slug,
+        preview,
+        subheader,
+        body,
+        created_at,
+        updated_at,
+        post_categories (
+          categories (
+            id,
+            name
+          )
+        )
+      `)
+      .eq('slug', slug)
+      .single()
+
+    if (error) {
+      console.error('Error fetching post by slug:', error)
+      return null
+    }
+
+    return post ? this.transformDatabasePost(post) : null
+  } catch (error) {
+    console.error('Error in getPostBySlug:', error)
+    return null
   }
 }
 
