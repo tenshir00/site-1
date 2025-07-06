@@ -34,8 +34,9 @@ export class PostService {
           id,
           title,
           slug,
-          description,
-          content,
+          preview,
+          subheader,
+          body,
           created_at,
           updated_at,
           post_categories (
@@ -69,8 +70,9 @@ export class PostService {
           id,
           title,
           slug,
-          description,
-          content,
+          preview,
+          subheader,
+          body,
           created_at,
           updated_at,
           post_categories (
@@ -104,8 +106,9 @@ export class PostService {
           id,
           title,
           slug,
-          description,
-          content,
+          preview,
+          subheader,
+          body,
           created_at,
           updated_at,
           post_categories (
@@ -164,13 +167,13 @@ export class PostService {
       year: 'numeric' 
     })
 
-    // Use the dedicated description field if available, otherwise extract from content
+    // Use the preview field for description (shown on writing page)
     let description = ''
-    if (dbPost.description && dbPost.description.trim()) {
-      description = dbPost.description.trim()
-    } else if (dbPost.content) {
-      // Fallback: extract description from content (first paragraph or first 200 chars)
-      const cleanContent = dbPost.content
+    if (dbPost.preview && dbPost.preview.trim()) {
+      description = dbPost.preview.trim()
+    } else if (dbPost.body) {
+      // Fallback: extract description from body (first paragraph or first 200 chars)
+      const cleanContent = dbPost.body
         .replace(/^#+\s+/gm, '') // Remove markdown headers
         .replace(/\n+/g, ' ') // Replace line breaks with spaces
         .trim()
@@ -183,17 +186,29 @@ export class PostService {
     // Ensure we have a slug - use the database slug if available, otherwise generate one
     const postSlug = dbPost.slug || slugify(dbPost.title || 'untitled')
 
+    // Combine subheader and body for the full content
+    let fullContent = ''
+    if (dbPost.subheader && dbPost.body) {
+      fullContent = `${dbPost.subheader}\n\n${dbPost.body}`
+    } else if (dbPost.body) {
+      fullContent = dbPost.body
+    } else if (dbPost.subheader) {
+      fullContent = dbPost.subheader
+    }
+
     return {
       id: dbPost.id,
       title: dbPost.title || 'Untitled',
       slug: postSlug,
       category: primaryCategory as Post['category'],
       date,
-      description,
-      content: dbPost.content || '',
+      description, // This is the preview text shown on writing page
+      content: fullContent, // This is the full content (subheader + body) shown in article view
       tags: allCategoryNames, // Store all categories as tags for display
       published: true, // All posts in DB are considered published
-      allCategories: allCategoryNames // Add this for filtering
+      allCategories: allCategoryNames, // Add this for filtering
+      subheader: dbPost.subheader || '', // Store subheader separately for article view
+      body: dbPost.body || '' // Store body separately for article view
     }
   }
 }

@@ -147,9 +147,12 @@ const PostView = () => {
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               {post.title}
             </h1>
-            <p className="text-lg text-gray-600 leading-relaxed">
-              {post.description}
-            </p>
+            {/* Show subheader if available */}
+            {post.subheader && (
+              <p className="text-lg text-gray-600 leading-relaxed">
+                {post.subheader}
+              </p>
+            )}
           </div>
 
           {/* Meta information - show all categories */}
@@ -179,13 +182,13 @@ const PostView = () => {
             <span className="text-gray-600">{post.date}</span>
           </div>
 
-          {/* Content */}
+          {/* Main body content */}
           <div className="prose prose-lg max-w-none">
             <div 
               className="text-gray-800 leading-relaxed"
               style={{ fontSize: '18px', lineHeight: '1.7' }}
               dangerouslySetInnerHTML={{ 
-                __html: post.content
+                __html: (post.body || post.content)
                   .replace(/\n\n/g, '</p><p class="mb-6">')
                   .replace(/\n/g, '<br>')
                   .replace(/^/, '<p class="mb-6">')

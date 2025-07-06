@@ -4,11 +4,13 @@ export interface Post {
   slug: string;
   category: 'technology' | 'finance' | 'personal' | 'mixed';
   date: string;
-  description: string;
-  content: string;
+  description: string; // Preview text shown on writing page
+  content: string; // Full content (subheader + body) for article view
   tags: string[];
   published: boolean;
   allCategories?: string[]; // Optional field for all linked categories
+  subheader?: string; // Subheader shown under title in article view
+  body?: string; // Main body content in article view
 }
 
 export interface PostFormData {
