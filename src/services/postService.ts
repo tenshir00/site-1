@@ -3,7 +3,7 @@ import { Post } from '../types/Post'
 import { slugify } from '../utils/slugify'
 
 // Map database category names to frontend categories
-;function mapCategoryName(dbCategoryName: string): string {
+function mapCategoryName(dbCategoryName: string): string {
   const normalized = dbCategoryName.toLowerCase().trim()
   
   switch (normalized) {
