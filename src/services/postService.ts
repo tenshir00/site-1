@@ -34,6 +34,7 @@ export class PostService {
           id,
           title,
           slug,
+          description,
           content,
           created_at,
           updated_at,
@@ -52,8 +53,6 @@ export class PostService {
         return []
       }
 
-      console.log('Raw posts with categories:', posts)
-
       return posts?.map(this.transformDatabasePost) || []
     } catch (error) {
       console.error('Error in getPosts:', error)
@@ -70,6 +69,7 @@ export class PostService {
           id,
           title,
           slug,
+          description,
           content,
           created_at,
           updated_at,
@@ -104,6 +104,7 @@ export class PostService {
           id,
           title,
           slug,
+          description,
           content,
           created_at,
           updated_at,
@@ -131,9 +132,6 @@ export class PostService {
 
   // Transform database post to our Post type
   private static transformDatabasePost(dbPost: any): Post {
-    console.log('Transforming post:', dbPost.title)
-    console.log('Post categories data:', dbPost.post_categories)
-
     // Extract ALL categories from the join
     const categories = dbPost.post_categories || []
     let primaryCategory = 'mixed' // default fallback
@@ -145,8 +143,6 @@ export class PostService {
         .map((pc: any) => pc.categories?.name)
         .filter((name: string) => name) // Remove null/undefined
         .map(mapCategoryName) // Use the standalone function
-      
-      console.log('Extracted category names:', allCategoryNames)
       
       // Determine primary category
       if (allCategoryNames.length === 1) {
@@ -162,19 +158,18 @@ export class PostService {
       }
     }
 
-    console.log('Final primary category:', primaryCategory)
-    console.log('Final all categories:', allCategoryNames)
-
     // Format date
     const date = new Date(dbPost.created_at).toLocaleDateString('en-US', { 
       month: 'long', 
       year: 'numeric' 
     })
 
-    // Extract description from content (first paragraph or first 200 chars)
+    // Use the dedicated description field if available, otherwise extract from content
     let description = ''
-    if (dbPost.content) {
-      // Remove markdown headers and get first meaningful paragraph
+    if (dbPost.description && dbPost.description.trim()) {
+      description = dbPost.description.trim()
+    } else if (dbPost.content) {
+      // Fallback: extract description from content (first paragraph or first 200 chars)
       const cleanContent = dbPost.content
         .replace(/^#+\s+/gm, '') // Remove markdown headers
         .replace(/\n+/g, ' ') // Replace line breaks with spaces
@@ -188,7 +183,7 @@ export class PostService {
     // Ensure we have a slug - use the database slug if available, otherwise generate one
     const postSlug = dbPost.slug || slugify(dbPost.title || 'untitled')
 
-    const transformedPost = {
+    return {
       id: dbPost.id,
       title: dbPost.title || 'Untitled',
       slug: postSlug,
@@ -200,8 +195,5 @@ export class PostService {
       published: true, // All posts in DB are considered published
       allCategories: allCategoryNames // Add this for filtering
     }
-
-    console.log('Final transformed post:', transformedPost)
-    return transformedPost
   }
 }
