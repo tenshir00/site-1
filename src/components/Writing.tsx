@@ -44,20 +44,17 @@ const Writing = () => {
     return categoryMap[category as keyof typeof categoryMap] || '#757575';
   };
 
-  // Filter posts based on selected category - check both primary category and all categories
+  // Filter posts based on selected category - check if category is in allCategories array
   const filteredPosts = selectedCategory 
     ? posts.filter(post => {
         console.log(`Filtering post "${post.title}" for category "${selectedCategory}"`);
-        console.log('Post primary category:', post.category);
         console.log('Post all categories:', post.allCategories);
         
-        const matchesPrimary = post.category === selectedCategory;
-        const matchesAll = post.allCategories && post.allCategories.includes(selectedCategory);
+        // Check if the selected category is in the post's categories array
+        const hasCategory = post.allCategories && post.allCategories.includes(selectedCategory);
+        console.log('Has category:', hasCategory);
         
-        console.log('Matches primary:', matchesPrimary);
-        console.log('Matches all:', matchesAll);
-        
-        return matchesPrimary || matchesAll;
+        return hasCategory;
       })
     : posts;
 
@@ -179,7 +176,9 @@ const Writing = () => {
         
         {filteredPosts.length === 0 && !loading && (
           <div className="text-center py-12">
-            <p className="text-gray-500">No posts found in this category.</p>
+            <p className="text-gray-500">
+              {selectedCategory ? 'No posts found in this category.' : 'No posts available.'}
+            </p>
           </div>
         )}
       </div>

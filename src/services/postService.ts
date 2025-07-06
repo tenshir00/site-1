@@ -3,49 +3,10 @@ import { Post } from '../types/Post'
 import { slugify } from '../utils/slugify'
 
 export class PostService {
-  // Debug function to check database state
-  static async debugDatabase(): Promise<void> {
-    console.log('=== DATABASE DEBUG ===')
-    
-    // Check posts
-    const { data: posts, error: postsError } = await supabase
-      .from('writing_posts')
-      .select('*')
-    console.log('Posts:', posts, 'Error:', postsError)
-    
-    // Check categories
-    const { data: categories, error: catError } = await supabase
-      .from('categories')
-      .select('*')
-    console.log('Categories:', categories, 'Error:', catError)
-    
-    // Check post_categories
-    const { data: postCategories, error: pcError } = await supabase
-      .from('post_categories')
-      .select('*')
-    console.log('Post Categories:', postCategories, 'Error:', pcError)
-    
-    // Check post_categories with joins
-    const { data: joinedData, error: joinError } = await supabase
-      .from('post_categories')
-      .select(`
-        post_id,
-        category_id,
-        categories (
-          id,
-          name
-        )
-      `)
-    console.log('Joined Post Categories:', joinedData, 'Error:', joinError)
-  }
-
   // Get all published posts with their categories
   static async getPosts(): Promise<Post[]> {
     try {
-      // Debug the database first
-      await this.debugDatabase()
-      
-      // First, let's try a simpler query to debug
+      // Use the correct join syntax to get posts with all their categories
       const { data: posts, error: postsError } = await supabase
         .from('writing_posts')
         .select(`
@@ -54,7 +15,13 @@ export class PostService {
           slug,
           content,
           created_at,
-          updated_at
+          updated_at,
+          post_categories (
+            categories (
+              id,
+              name
+            )
+          )
         `)
         .not('slug', 'is', null)
         .order('created_at', { ascending: false })
@@ -64,38 +31,9 @@ export class PostService {
         return []
       }
 
-      console.log('Raw posts data:', posts)
+      console.log('Raw posts with categories:', posts)
 
-      if (!posts || posts.length === 0) {
-        return []
-      }
-
-      // Now get categories for each post separately
-      const postsWithCategories = await Promise.all(
-        posts.map(async (post) => {
-          const { data: postCategories, error: catError } = await supabase
-            .from('post_categories')
-            .select(`
-              categories (
-                id,
-                name
-              )
-            `)
-            .eq('post_id', post.id)
-
-          if (catError) {
-            console.error('Error fetching categories for post:', post.id, catError)
-            return { ...post, post_categories: [] }
-          }
-
-          console.log(`Categories for post "${post.title}":`, postCategories)
-          return { ...post, post_categories: postCategories || [] }
-        })
-      )
-
-      console.log('Posts with categories:', postsWithCategories)
-
-      return postsWithCategories?.map(this.transformDatabasePost) || []
+      return posts?.map(this.transformDatabasePost) || []
     } catch (error) {
       console.error('Error in getPosts:', error)
       return []
@@ -113,7 +51,13 @@ export class PostService {
           slug,
           content,
           created_at,
-          updated_at
+          updated_at,
+          post_categories (
+            categories (
+              id,
+              name
+            )
+          )
         `)
         .eq('id', id)
         .single()
@@ -123,25 +67,7 @@ export class PostService {
         return null
       }
 
-      if (!post) return null
-
-      // Get categories separately
-      const { data: postCategories, error: catError } = await supabase
-        .from('post_categories')
-        .select(`
-          categories (
-            id,
-            name
-          )
-        `)
-        .eq('post_id', post.id)
-
-      if (catError) {
-        console.error('Error fetching categories for post:', post.id, catError)
-      }
-
-      const postWithCategories = { ...post, post_categories: postCategories || [] }
-      return this.transformDatabasePost(postWithCategories)
+      return post ? this.transformDatabasePost(post) : null
     } catch (error) {
       console.error('Error in getPostById:', error)
       return null
@@ -159,7 +85,13 @@ export class PostService {
           slug,
           content,
           created_at,
-          updated_at
+          updated_at,
+          post_categories (
+            categories (
+              id,
+              name
+            )
+          )
         `)
         .eq('slug', slug)
         .single()
@@ -169,25 +101,7 @@ export class PostService {
         return null
       }
 
-      if (!post) return null
-
-      // Get categories separately
-      const { data: postCategories, error: catError } = await supabase
-        .from('post_categories')
-        .select(`
-          categories (
-            id,
-            name
-          )
-        `)
-        .eq('post_id', post.id)
-
-      if (catError) {
-        console.error('Error fetching categories for post:', post.id, catError)
-      }
-
-      const postWithCategories = { ...post, post_categories: postCategories || [] }
-      return this.transformDatabasePost(postWithCategories)
+      return post ? this.transformDatabasePost(post) : null
     } catch (error) {
       console.error('Error in getPostBySlug:', error)
       return null
@@ -196,9 +110,8 @@ export class PostService {
 
   // Transform database post to our Post type
   private static transformDatabasePost(dbPost: any): Post {
-    // Debug: Log the transformation process
     console.log('Transforming post:', dbPost.title)
-    console.log('Raw categories:', dbPost.post_categories)
+    console.log('Post categories data:', dbPost.post_categories)
 
     // Extract ALL categories from the join
     const categories = dbPost.post_categories || []
@@ -206,27 +119,25 @@ export class PostService {
     let allCategoryNames: string[] = []
     
     if (categories.length > 0) {
-      // Get all category names
+      // Get all category names from the nested structure
       allCategoryNames = categories
-        .map((pc: any) => {
-          console.log('Processing category:', pc.categories)
-          return pc.categories?.name
-        })
+        .map((pc: any) => pc.categories?.name)
         .filter((name: string) => name) // Remove null/undefined
-        .map((name: string) => {
-          const mapped = this.mapCategoryName(name)
-          console.log(`Mapping "${name}" to "${mapped}"`)
-          return mapped
-        })
+        .map((name: string) => this.mapCategoryName(name))
       
-      console.log('All mapped categories:', allCategoryNames)
+      console.log('Extracted category names:', allCategoryNames)
       
-      // Use the first category as primary, or 'mixed' if multiple
+      // Determine primary category
       if (allCategoryNames.length === 1) {
         primaryCategory = allCategoryNames[0]
       } else if (allCategoryNames.length > 1) {
-        // If multiple categories, check if one is dominant or use 'mixed'
-        primaryCategory = 'mixed'
+        // If multiple categories, prefer specific ones over 'mixed'
+        const specificCategories = allCategoryNames.filter(cat => cat !== 'mixed')
+        if (specificCategories.length > 0) {
+          primaryCategory = specificCategories[0] // Use first specific category
+        } else {
+          primaryCategory = 'mixed'
+        }
       }
     }
 
@@ -266,7 +177,7 @@ export class PostService {
       content: dbPost.content || '',
       tags: allCategoryNames, // Store all categories as tags for display
       published: true, // All posts in DB are considered published
-      allCategories: allCategoryNames // Add this for reference
+      allCategories: allCategoryNames // Add this for filtering
     }
 
     console.log('Final transformed post:', transformedPost)
@@ -276,8 +187,6 @@ export class PostService {
   // Map database category names to frontend categories
   private static mapCategoryName(dbCategoryName: string): string {
     const normalized = dbCategoryName.toLowerCase().trim()
-    
-    console.log(`Mapping category: "${dbCategoryName}" -> normalized: "${normalized}"`)
     
     switch (normalized) {
       case 'tech':
@@ -292,7 +201,6 @@ export class PostService {
       case 'general':
         return 'mixed'
       default:
-        console.log(`No mapping found for "${normalized}", defaulting to "mixed"`)
         return 'mixed'
     }
   }
