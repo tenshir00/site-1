@@ -2,6 +2,27 @@ import { supabase } from '../lib/supabase'
 import { Post } from '../types/Post'
 import { slugify } from '../utils/slugify'
 
+// Map database category names to frontend categories
+function mapCategoryName(dbCategoryName: string): string {
+  const normalized = dbCategoryName.toLowerCase().trim()
+  
+  switch (normalized) {
+    case 'tech':
+    case 'technology':
+      return 'technology'
+    case 'finance':
+    case 'financial':
+      return 'finance'
+    case 'personal':
+      return 'personal'
+    case 'mixed':
+    case 'general':
+      return 'mixed'
+    default:
+      return 'mixed'
+  }
+}
+
 export class PostService {
   // Get all published posts with their categories
   static async getPosts(): Promise<Post[]> {
@@ -123,7 +144,7 @@ export class PostService {
       allCategoryNames = categories
         .map((pc: any) => pc.categories?.name)
         .filter((name: string) => name) // Remove null/undefined
-        .map((name: string) => this.mapCategoryName(name))
+        .map(mapCategoryName) // Use the standalone function
       
       console.log('Extracted category names:', allCategoryNames)
       
@@ -182,26 +203,5 @@ export class PostService {
 
     console.log('Final transformed post:', transformedPost)
     return transformedPost
-  }
-
-  // Map database category names to frontend categories
-  private static mapCategoryName(dbCategoryName: string): string {
-    const normalized = dbCategoryName.toLowerCase().trim()
-    
-    switch (normalized) {
-      case 'tech':
-      case 'technology':
-        return 'technology'
-      case 'finance':
-      case 'financial':
-        return 'finance'
-      case 'personal':
-        return 'personal'
-      case 'mixed':
-      case 'general':
-        return 'mixed'
-      default:
-        return 'mixed'
-    }
   }
 }
