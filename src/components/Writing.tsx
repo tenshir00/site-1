@@ -5,7 +5,7 @@ import { Post } from '../types/Post';
 
 const Writing = () => {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('mixed'); // Default to 'mixed'
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,11 +27,12 @@ const Writing = () => {
     loadPosts();
   }, []);
 
+  // Reorder categories with Mixed first
   const categories = [
+    { id: 'mixed', name: 'Mixed', color: '#757575' },
     { id: 'technology', name: 'Technology', color: '#1976D2' },
     { id: 'finance', name: 'Finance', color: '#7B1FA2' },
-    { id: 'personal', name: 'Personal', color: '#FF9800' },
-    { id: 'mixed', name: 'Mixed', color: '#757575' }
+    { id: 'personal', name: 'Personal', color: '#FF9800' }
   ];
 
   const getCategoryColor = (category: string) => {
