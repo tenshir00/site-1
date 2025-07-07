@@ -12,6 +12,17 @@ function AppContent() {
   const [currentView, setCurrentView] = useState('landing');
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+useEffect(() => {
+    if (location.pathname === '/') {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [location.pathname]);
+  
   // Determine current view based on route
   const getCurrentView = () => {
     if (location.pathname.startsWith('/writing')) return 'writing';
