@@ -145,7 +145,10 @@ const PostView = () => {
             
             {/* Header content */}
             <div className="flex-1 -ml-4">
-            <h1 className="text-4xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl text-gray-900 mb-6" style={{ 
+              fontFamily: '"Monument Grotesk Variable", -apple-system, BlinkMacSystemFont, sans-serif',
+              fontWeight: '400'
+            }}>
               {post.title}
             </h1>
             {/* Show subheader if available */}
@@ -215,21 +218,6 @@ const PostView = () => {
             />
           </div>
 
-          {/* Category Tags - show all linked categories */}
-          {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 && (
-            <div className="mt-16 ml-4">
-              <div className="flex flex-wrap gap-2">
-                {post.allCategories.filter(cat => cat !== 'mixed').map((category, index) => (
-                  <span 
-                    key={index}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm capitalize"
-                  >
-                    {category}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
