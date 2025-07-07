@@ -42,7 +42,7 @@ function AppContent() {
   const renderLandingContent = () => (
     <div className="flex items-start h-screen pl-8 pt-16">
       <div 
-        className="w-[900px] h-[675px] bg-gray-200 overflow-hidden cursor-pointer group"
+        className="w-[1200px] h-[675px] bg-gray-200 overflow-hidden cursor-pointer group"
         onClick={handlePhotoClick}
       >
         <img 
