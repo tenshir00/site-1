@@ -132,19 +132,19 @@ const PostView = () => {
 
       {/* Main content */}
       <div className="ml-48">
-        <div className="max-w-4xl mx-auto px-8 py-8">
+        <div className="max-w-4xl px-4 py-8">
           {/* Header with back button */}
-          <div className="mb-6 -mt-2 flex items-start space-x-4">
+          <div className="mb-6 -mt-2 flex items-start space-x-4 ml-4">
             {/* Back button positioned to the left */}
             <button
               onClick={() => navigate('/writing')}
-              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1"
+              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1 -ml-8"
             >
               <ArrowLeft size={20} />
             </button>
             
             {/* Header content */}
-            <div className="flex-1">
+            <div className="flex-1 -ml-4">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               {post.title}
             </h1>
@@ -158,7 +158,7 @@ const PostView = () => {
           </div>
 
           {/* Meta information - show all categories */}
-          <div className="flex items-center space-x-4 mb-8 pb-6">
+          <div className="flex items-center space-x-4 mb-8 pb-6 ml-4">
             {/* Show all categories if available, otherwise show primary category */}
             {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 ? (
               <div className="flex items-center space-x-3">
@@ -191,7 +191,7 @@ const PostView = () => {
           </div>
 
           {/* Main body content */}
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-lg max-w-none ml-4">
             <div 
               className="text-gray-800 leading-relaxed"
               style={{ 
@@ -217,7 +217,7 @@ const PostView = () => {
 
           {/* Category Tags - show all linked categories */}
           {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 && (
-            <div className="mt-16">
+            <div className="mt-16 ml-4">
               <div className="flex flex-wrap gap-2">
                 {post.allCategories.filter(cat => cat !== 'mixed').map((category, index) => (
                   <span 
