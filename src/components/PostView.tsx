@@ -146,15 +146,14 @@ const PostView = () => {
             {/* Header content */}
             <div className="flex-1 -ml-4">
             <h1 className="text-4xl font-bold text-gray-900 mb-6">
+            <h1 className="text-2xl font-medium text-gray-900 mb-4">
               {post.title}
             </h1>
             {/* Show subheader if available */}
             {post.subheader && (
               <p className="text-gray-600 leading-relaxed" style={{ 
-                fontSize: '1.2rem', 
+                fontSize: '0.95rem', 
                 lineHeight: '1.7',
-                fontFamily: '"Monument Grotesk Variable", -apple-system, BlinkMacSystemFont, sans-serif',
-                fontWeight: '400'
               }}>
                 {post.subheader}
               </p>
@@ -200,10 +199,8 @@ const PostView = () => {
             <div 
               className="text-gray-800 leading-relaxed"
               style={{ 
-                fontSize: '1.2rem', 
+                fontSize: '0.95rem', 
                 lineHeight: '1.7',
-                fontFamily: '"Monument Grotesk Variable", -apple-system, BlinkMacSystemFont, sans-serif',
-                fontWeight: '400'
               }}
               dangerouslySetInnerHTML={{ 
                 __html: (post.body || post.content)
@@ -211,9 +208,9 @@ const PostView = () => {
                   .replace(/\n/g, '<br>')
                   .replace(/^/, '<p class="mb-6">')
                   .replace(/$/, '</p>')
-                  .replace(/# (.*?)<\/p>/g, '<h1 class="text-3xl font-bold mt-12 mb-6 text-gray-900">$1</h1>')
-                  .replace(/## (.*?)<\/p>/g, '<h2 class="text-2xl font-semibold mt-10 mb-5 text-gray-900">$2</h2>')
-                  .replace(/### (.*?)<\/p>/g, '<h3 class="text-xl font-medium mt-8 mb-4 text-gray-900">$3</h3>')
+                  .replace(/# (.*?)<\/p>/g, '<h1 class="text-xl font-medium mt-8 mb-4 text-gray-900">$1</h1>')
+                  .replace(/## (.*?)<\/p>/g, '<h2 class="text-lg font-medium mt-6 mb-3 text-gray-900">$2</h2>')
+                  .replace(/### (.*?)<\/p>/g, '<h3 class="text-base font-medium mt-4 mb-2 text-gray-900">$3</h3>')
                   .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
                   .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
               }}
