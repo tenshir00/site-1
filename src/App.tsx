@@ -51,9 +51,9 @@ useEffect(() => {
   };
 
   const renderLandingContent = () => (
-    <div className="flex items-start h-screen pl-8 pt-2">
+    <div className="flex items-start h-screen pl-8 pt-2 lg:items-center lg:pt-0">
       <div 
-        className="w-[1200px] h-[600px] bg-gray-200 overflow-hidden cursor-pointer group relative"
+        className="w-full max-w-[400px] h-[500px] lg:w-[1200px] lg:h-[600px] bg-gray-200 overflow-hidden cursor-pointer group relative mx-auto lg:mx-0"
         onClick={handlePhotoClick}
       >
         {/* Large screen image - crops from left as window shrinks */}
@@ -67,7 +67,7 @@ useEffect(() => {
         <img 
           src="/tower.jpg" 
           alt="UT Austin Tower" 
-          className="block lg:hidden w-full h-full object-cover object-center grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+          className="block lg:hidden w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
         />
       </div>
     </div>
