@@ -22,7 +22,7 @@ const Sidebar = ({ currentView, onSectionChange, onPhotoClick }: SidebarProps) =
   };
 
   return (
-    <div className="fixed left-0 top-0 w-48 h-full bg-[#F4F3EF] p-6 flex flex-col lg:flex lg:flex-col md:hidden">
+    <div className="fixed left-0 top-0 w-48 h-full bg-[#F4F3EF] p-6 flex flex-col">
       <div className="mb-8">
         <button 
           onClick={handleLogoClick}
