@@ -1,3 +1,6 @@
+/* Import Monument Grotesk Variable font */
+@import url('https://fonts.googleapis.com/css2?family=Monument+Grotesk:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

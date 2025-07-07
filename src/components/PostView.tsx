@@ -68,7 +68,7 @@ const PostView = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#F4F3EF]">
       {/* Sidebar */}
       <div className="fixed left-0 top-0 w-48 h-full bg-[#F4F3EF] p-6 flex flex-col">
         <div className="mb-8">
@@ -132,18 +132,18 @@ const PostView = () => {
 
       {/* Main content */}
       <div className="ml-48">
-        <div className="max-w-4xl mx-auto px-8 py-12">
+        <div className="max-w-4xl mx-auto px-8 py-8">
           {/* Back button */}
           <button
             onClick={() => navigate('/writing')}
-            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors mb-8"
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors mb-6"
           >
             <ArrowLeft size={20} />
             <span>Back to Writing</span>
           </button>
           
           {/* Header */}
-          <div className="mb-6">
+          <div className="mb-6 -mt-2">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               {post.title}
             </h1>
@@ -156,11 +156,11 @@ const PostView = () => {
           </div>
 
           {/* Meta information - show all categories */}
-          <div className="flex items-center space-x-4 mb-8 pb-6 border-b border-gray-200">
+          <div className="flex items-center space-x-4 mb-8 pb-6">
             {/* Show all categories if available, otherwise show primary category */}
-            {post.allCategories && post.allCategories.length > 0 ? (
+            {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 ? (
               <div className="flex items-center space-x-3">
-                {post.allCategories.map((category, index) => (
+                {post.allCategories.filter(cat => cat !== 'mixed').map((category, index) => (
                   <div key={index} className="flex items-center space-x-2">
                     <div 
                       className="w-2 h-2 rounded-full"
@@ -170,7 +170,7 @@ const PostView = () => {
                   </div>
                 ))}
               </div>
-            ) : (
+            ) : post.category !== 'mixed' && (
               <div className="flex items-center space-x-2">
                 <div 
                   className="w-2 h-2 rounded-full"
@@ -179,14 +179,28 @@ const PostView = () => {
                 <span className="text-gray-600 capitalize">{post.category}</span>
               </div>
             )}
-            <span className="text-gray-600">{post.date}</span>
+            <span className="text-gray-600">
+              {new Date(post.created_at || post.date).toLocaleDateString('en-US', { 
+                month: 'long', 
+                day: 'numeric', 
+                year: 'numeric' 
+              })}
+            </span>
           </div>
+
+          {/* Horizontal divider */}
+          <hr className="border-gray-300 mb-8" />
 
           {/* Main body content */}
           <div className="prose prose-lg max-w-none">
             <div 
               className="text-gray-800 leading-relaxed"
-              style={{ fontSize: '18px', lineHeight: '1.7' }}
+              style={{ 
+                fontSize: '1.2rem', 
+                lineHeight: '1.7',
+                fontFamily: '"Monument Grotesk Variable", -apple-system, BlinkMacSystemFont, sans-serif',
+                fontWeight: '400'
+              }}
               dangerouslySetInnerHTML={{ 
                 __html: (post.body || post.content)
                   .replace(/\n\n/g, '</p><p class="mb-6">')
@@ -203,10 +217,11 @@ const PostView = () => {
           </div>
 
           {/* Category Tags - show all linked categories */}
-          {post.allCategories && post.allCategories.length > 0 && (
-            <div className="mt-16 pt-8 border-t border-gray-200">
+          {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 && (
+            <div className="mt-16 pt-8">
+              <hr className="border-gray-300 mb-6" />
               <div className="flex flex-wrap gap-2">
-                {post.allCategories.map((category, index) => (
+                {post.allCategories.filter(cat => cat !== 'mixed').map((category, index) => (
                   <span 
                     key={index}
                     className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm capitalize"
