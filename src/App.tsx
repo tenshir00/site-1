@@ -40,15 +40,15 @@ function AppContent() {
   };
 
   const renderLandingContent = () => (
-    <div className="flex items-center h-screen pl-8">
+    <div className="flex items-start h-screen pl-8 pt-16">
       <div 
-        className="w-[768px] h-[576px] bg-gray-200 overflow-hidden cursor-pointer group"
+        className="w-[900px] h-[675px] bg-gray-200 overflow-hidden cursor-pointer group"
         onClick={handlePhotoClick}
       >
         <img 
           src="/ut_austin copy.jpg" 
           alt="UT Austin Campus" 
-          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+          className="w-full h-full object-cover object-center grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
         />
       </div>
     </div>
