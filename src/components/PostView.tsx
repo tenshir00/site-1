@@ -150,7 +150,12 @@ const PostView = () => {
             </h1>
             {/* Show subheader if available */}
             {post.subheader && (
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <p className="text-gray-600 leading-relaxed" style={{ 
+                fontSize: '1.2rem', 
+                lineHeight: '1.7',
+                fontFamily: '"Monument Grotesk Variable", -apple-system, BlinkMacSystemFont, sans-serif',
+                fontWeight: '400'
+              }}>
                 {post.subheader}
               </p>
             )}
@@ -215,21 +220,6 @@ const PostView = () => {
             />
           </div>
 
-          {/* Category Tags - show all linked categories */}
-          {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 && (
-            <div className="mt-16 ml-4">
-              <div className="flex flex-wrap gap-2">
-                {post.allCategories.filter(cat => cat !== 'mixed').map((category, index) => (
-                  <span 
-                    key={index}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm capitalize"
-                  >
-                    {category}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
