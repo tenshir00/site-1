@@ -75,7 +75,7 @@ function AppContent() {
       <main className={isMainRoute ? "ml-48" : ""}>
         <Routes>
           <Route path="/" element={
-            <div className={isMainRoute ? 'p-8 pl-12' : ''}>
+            <div className={isMainRoute ? 'pt-8 pb-0 pl-12 pr-8' : ''}>
               <div className={isMainRoute ? 'max-w-5xl' : ''}>
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
