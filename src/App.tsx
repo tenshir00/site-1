@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Mail } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import About from './components/About';
 import Writing from './components/Writing';
@@ -50,10 +51,20 @@ useEffect(() => {
     }, 200);
   };
 
+  const handleMobileNavigation = (path: string, section: string) => {
+    navigate(path);
+    setCurrentView(section);
+  };
+
+  const handleMobileLogoClick = () => {
+    navigate('/');
+    setCurrentView('landing');
+  };
+
   const renderLandingContent = () => (
-    <div className="flex items-start h-screen pl-8 pt-2">
+    <div className="flex items-start h-screen pl-8 pt-2 md:items-center md:justify-center md:pl-0">
       <div 
-        className="w-[1200px] h-[600px] bg-gray-200 overflow-hidden cursor-pointer group relative"
+        className="w-[1200px] h-[600px] md:w-[400px] md:h-[300px] bg-gray-200 overflow-hidden cursor-pointer group relative"
         onClick={handlePhotoClick}
       >
         {/* Large screen image - crops from left as window shrinks */}
@@ -63,16 +74,93 @@ useEffect(() => {
           className="hidden lg:block w-full h-full object-cover object-right grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
         />
         
-        {/* Small screen image - shows when layout forces photo to bottom */}
+        {/* Medium screen image - shows on tablets */}
         <img 
           src="/tower.jpg" 
           alt="UT Austin Tower" 
-          className="block lg:hidden w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+          className="hidden md:block lg:hidden w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+        />
+        
+        {/* Mobile screen image - centered */}
+        <img 
+          src="/tower.jpg" 
+          alt="UT Austin Tower" 
+          className="block md:hidden w-full h-full object-cover object-center grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
         />
       </div>
     </div>
   );
 
+  // Mobile Navigation Component
+  const MobileNavigation = () => (
+    <div className="md:hidden fixed top-0 right-0 p-4 z-50">
+      <div className="text-right space-y-3">
+        {/* Angel Zepeda - top right */}
+        <button 
+          onClick={handleMobileLogoClick}
+          className="block text-xl font-medium text-gray-900 hover:text-[#BF5700] transition-colors"
+        >
+          Angel Zepeda
+        </button>
+        
+        {/* Navigation links - horizontal bar */}
+        <div className="flex space-x-4 justify-end">
+          <button
+            onClick={() => handleMobileNavigation('/about', 'about')}
+            className={`transition-colors ${
+              actualCurrentView === 'about' 
+                ? 'text-[#BF5700]' 
+                : 'text-gray-600 hover:text-[#BF5700]'
+            }`}
+          >
+            About
+          </button>
+          <button
+            onClick={() => handleMobileNavigation('/writing', 'writing')}
+            className={`transition-colors ${
+              actualCurrentView === 'writing' 
+                ? 'text-[#BF5700]' 
+                : 'text-gray-600 hover:text-[#BF5700]'
+            }`}
+          >
+            Writing
+          </button>
+          <button
+            onClick={() => handleMobileNavigation('/projects', 'projects')}
+            className={`transition-colors ${
+              actualCurrentView === 'projects' 
+                ? 'text-[#BF5700]' 
+                : 'text-gray-600 hover:text-[#BF5700]'
+            }`}
+          >
+            Projects
+          </button>
+        </div>
+        
+        {/* Social links - horizontal bar */}
+        <div className="flex space-x-3 justify-end">
+          <a 
+            href="https://www.linkedin.com/in/zepangel/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-[#BF5700] transition-colors"
+          >
+            <img 
+              src="/linkedin.png" 
+              alt="LinkedIn" 
+              className="w-[18px] h-[18px] opacity-60 hover:opacity-100 transition-opacity"
+            />
+          </a>
+          <a 
+            href="mailto:azcareers00@gmail.com"
+            className="text-gray-400 hover:text-[#BF5700] transition-colors"
+          >
+            <Mail size={18} />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
   // Check if we're on a writing-related route or post route
   const isWritingRoute = location.pathname.startsWith('/writing');
   const isPostRoute = location.pathname !== '/' && 
@@ -83,6 +171,7 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
+      {/* Desktop Sidebar */}
       {isMainRoute && (
         <Sidebar 
           currentView={actualCurrentView}
@@ -91,11 +180,14 @@ useEffect(() => {
         />
       )}
       
-      <main className={isMainRoute ? "ml-48" : ""}>
+      {/* Mobile Navigation */}
+      {isMainRoute && <MobileNavigation />}
+      
+      <main className={isMainRoute ? "md:ml-48" : ""}>
         <Routes>
           <Route path="/" element={
-            <div className={isMainRoute ? 'pt-8 pb-0 pl-12 pr-8' : ''}>
-              <div className={isMainRoute ? 'max-w-5xl' : ''}>
+            <div className={isMainRoute ? 'pt-8 pb-0 md:pl-12 pr-8 pl-4' : ''}>
+              <div className={isMainRoute ? 'md:max-w-5xl' : ''}>
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -108,8 +200,8 @@ useEffect(() => {
           } />
           
           <Route path="/about" element={
-            <div className="p-8 pl-12">
-              <div className="max-w-5xl">
+            <div className="p-8 md:pl-12 pl-4">
+              <div className="md:max-w-5xl">
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -122,8 +214,8 @@ useEffect(() => {
           } />
           
           <Route path="/writing" element={
-            <div className="p-8 pl-12">
-              <div className="max-w-5xl">
+            <div className="p-8 md:pl-12 pl-4">
+              <div className="md:max-w-5xl">
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -136,8 +228,8 @@ useEffect(() => {
           } />
           
           <Route path="/projects" element={
-            <div className="p-8 pl-12">
-              <div className="max-w-5xl">
+            <div className="p-8 md:pl-12 pl-4">
+              <div className="md:max-w-5xl">
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 

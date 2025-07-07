@@ -69,8 +69,8 @@ const PostView = () => {
 
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
-      {/* Sidebar */}
-      <div className="fixed left-0 top-0 w-48 h-full bg-[#F4F3EF] p-6 flex flex-col">
+      {/* Desktop Sidebar */}
+      <div className="hidden md:flex fixed left-0 top-0 w-48 h-full bg-[#F4F3EF] p-6 flex-col">
         <div className="mb-8">
           <button 
             onClick={() => navigate('/')}
@@ -130,15 +130,75 @@ const PostView = () => {
         </div>
       </div>
 
+      {/* Mobile Navigation */}
+      <div className="md:hidden fixed top-0 right-0 p-4 z-50">
+        <div className="text-right space-y-3">
+          {/* Angel Zepeda - top right */}
+          <button 
+            onClick={() => navigate('/')}
+            className="block text-xl font-medium text-gray-900 hover:text-[#BF5700] transition-colors"
+          >
+            Angel Zepeda
+          </button>
+          
+          {/* Navigation links - horizontal bar */}
+          <div className="flex space-x-4 justify-end">
+            <button
+              onClick={() => navigate('/about')}
+              className="text-gray-600 hover:text-[#BF5700] transition-colors"
+            >
+              About
+            </button>
+            <button
+              onClick={() => navigate('/writing')}
+              className="text-[#BF5700]"
+            >
+              Writing
+            </button>
+            <button
+              onClick={() => navigate('/projects')}
+              className="text-gray-600 hover:text-[#BF5700] transition-colors"
+            >
+              Projects
+            </button>
+          </div>
+          
+          {/* Social links - horizontal bar */}
+          <div className="flex space-x-3 justify-end">
+            <a 
+              href="https://www.linkedin.com/in/zepangel/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-[#BF5700] transition-colors"
+            >
+              <img 
+                src="/linkedin.png" 
+                alt="LinkedIn" 
+                className="w-[18px] h-[18px] opacity-60 hover:opacity-100 transition-opacity"
+              />
+            </a>
+            <a 
+              href="mailto:azcareers00@gmail.com"
+              className="text-gray-400 hover:text-[#BF5700] transition-colors"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Main content */}
-      <div className="ml-48">
+      <div className="md:ml-48">
         <div className="max-w-4xl px-4 py-8">
           {/* Header with back button */}
-          <div className="mb-6 -mt-2 flex items-start space-x-4 ml-4">
+          <div className="mb-6 -mt-2 flex items-start space-x-4 md:ml-4">
             {/* Back button positioned to the left */}
             <button
               onClick={() => navigate('/writing')}
-              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1 -ml-8"
+              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1 md:-ml-8"
             >
               <ArrowLeft size={20} />
             </button>
@@ -163,7 +223,7 @@ const PostView = () => {
           </div>
 
           {/* Meta information - show all categories */}
-          <div className="flex items-center space-x-4 mb-8 pb-6 ml-4">
+          <div className="flex items-center space-x-4 mb-8 pb-6 md:ml-4">
             {/* Show all categories if available, otherwise show primary category */}
             {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 ? (
               <div className="flex items-center space-x-3">
@@ -196,7 +256,7 @@ const PostView = () => {
           </div>
 
           {/* Main body content */}
-          <div className="prose prose-lg max-w-none ml-4">
+          <div className="prose prose-lg max-w-none md:ml-4">
             <div 
               className="text-gray-800 leading-relaxed"
               style={{ 
