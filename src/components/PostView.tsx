@@ -133,17 +133,18 @@ const PostView = () => {
       {/* Main content */}
       <div className="ml-48">
         <div className="max-w-4xl mx-auto px-8 py-8">
-          {/* Back button */}
-          <button
-            onClick={() => navigate('/writing')}
-            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors mb-6"
-          >
-            <ArrowLeft size={20} />
-            <span>Back to Writing</span>
-          </button>
-          
-          {/* Header */}
-          <div className="mb-6 -mt-2">
+          {/* Header with back button */}
+          <div className="mb-6 -mt-2 flex items-start space-x-4">
+            {/* Back button positioned to the left */}
+            <button
+              onClick={() => navigate('/writing')}
+              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1"
+            >
+              <ArrowLeft size={20} />
+            </button>
+            
+            {/* Header content */}
+            <div className="flex-1">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               {post.title}
             </h1>
@@ -153,6 +154,7 @@ const PostView = () => {
                 {post.subheader}
               </p>
             )}
+            </div>
           </div>
 
           {/* Meta information - show all categories */}
@@ -188,9 +190,6 @@ const PostView = () => {
             </span>
           </div>
 
-          {/* Horizontal divider */}
-          <hr className="border-gray-300 mb-8" />
-
           {/* Main body content */}
           <div className="prose prose-lg max-w-none">
             <div 
@@ -218,8 +217,7 @@ const PostView = () => {
 
           {/* Category Tags - show all linked categories */}
           {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 && (
-            <div className="mt-16 pt-8">
-              <hr className="border-gray-300 mb-6" />
+            <div className="mt-16">
               <div className="flex flex-wrap gap-2">
                 {post.allCategories.filter(cat => cat !== 'mixed').map((category, index) => (
                   <span 
