@@ -67,7 +67,7 @@ useEffect(() => {
         <img 
           src="/tower.jpg" 
           alt="UT Austin Tower" 
-          className="block lg:hidden w-full h-full object-cover object-center grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+          className="block lg:hidden w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
         />
       </div>
     </div>
