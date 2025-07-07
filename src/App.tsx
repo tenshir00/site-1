@@ -50,6 +50,16 @@ useEffect(() => {
     }, 200);
   };
 
+  const handleNavigation = (path: string, section: string) => {
+    navigate(path);
+    onSectionChange(section);
+  };
+
+  const handleLogoClick = () => {
+    navigate('/');
+    onSectionChange('landing');
+  };
+
   const renderLandingContent = () => (
     <div className="flex items-start h-screen pl-8 pt-2 lg:items-center lg:pt-0">
       <div 
@@ -83,6 +93,7 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
+      {/* Desktop Sidebar */}
       {isMainRoute && (
         <Sidebar 
           currentView={actualCurrentView}
@@ -91,11 +102,58 @@ useEffect(() => {
         />
       )}
       
-      <main className={isMainRoute ? "ml-48" : ""}>
+      {/* Mobile Navigation Bar */}
+      {isMainRoute && (
+        <div className="lg:hidden fixed top-0 left-0 right-0 bg-[#F4F3EF] p-4 z-50 border-b border-gray-200">
+          <div className="flex items-center justify-between">
+            <button 
+              onClick={handleLogoClick}
+              className="text-lg font-medium text-gray-900 hover:text-[#BF5700] transition-colors"
+            >
+              Angel Zepeda
+            </button>
+            
+            <nav className="flex space-x-6">
+              <button
+                onClick={() => handleNavigation('/about', 'about')}
+                className={`text-sm transition-colors ${
+                  actualCurrentView === 'about' 
+                    ? 'text-[#BF5700]' 
+                    : 'text-gray-600 hover:text-[#BF5700]'
+                }`}
+              >
+                About
+              </button>
+              <button
+                onClick={() => handleNavigation('/writing', 'writing')}
+                className={`text-sm transition-colors ${
+                  actualCurrentView === 'writing' 
+                    ? 'text-[#BF5700]' 
+                    : 'text-gray-600 hover:text-[#BF5700]'
+                }`}
+              >
+                Writing
+              </button>
+              <button
+                onClick={() => handleNavigation('/projects', 'projects')}
+                className={`text-sm transition-colors ${
+                  actualCurrentView === 'projects' 
+                    ? 'text-[#BF5700]' 
+                    : 'text-gray-600 hover:text-[#BF5700]'
+                }`}
+              >
+                Projects
+              </button>
+            </nav>
+          </div>
+        </div>
+      )}
+      
+      <main className={isMainRoute ? "lg:ml-48" : ""}>
         <Routes>
           <Route path="/" element={
-            <div className={isMainRoute ? 'pt-8 pb-0 pl-12 pr-8' : ''}>
-              <div className={isMainRoute ? 'max-w-5xl' : ''}>
+            <div className={isMainRoute ? 'pt-20 lg:pt-8 pb-0 px-4 lg:pl-12 lg:pr-8' : ''}>
+              <div className={isMainRoute ? 'max-w-5xl mx-auto lg:mx-0' : ''}>
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -108,8 +166,8 @@ useEffect(() => {
           } />
           
           <Route path="/about" element={
-            <div className="p-8 pl-12">
-              <div className="max-w-5xl">
+            <div className="pt-20 lg:pt-8 pb-8 px-4 lg:pl-12 lg:pr-8">
+              <div className="max-w-5xl mx-auto lg:mx-0">
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -122,8 +180,8 @@ useEffect(() => {
           } />
           
           <Route path="/writing" element={
-            <div className="p-8 pl-12">
-              <div className="max-w-5xl">
+            <div className="pt-20 lg:pt-8 pb-8 px-4 lg:pl-12 lg:pr-8">
+              <div className="max-w-5xl mx-auto lg:mx-0">
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -136,8 +194,8 @@ useEffect(() => {
           } />
           
           <Route path="/projects" element={
-            <div className="p-8 pl-12">
-              <div className="max-w-5xl">
+            <div className="pt-20 lg:pt-8 pb-8 px-4 lg:pl-12 lg:pr-8">
+              <div className="max-w-5xl mx-auto lg:mx-0">
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
