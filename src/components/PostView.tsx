@@ -145,7 +145,7 @@ const PostView = () => {
             
             {/* Header content */}
             <div className="flex-1 -ml-4">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-gray-900 mb-6">
               {post.title}
             </h1>
             {/* Show subheader if available */}
