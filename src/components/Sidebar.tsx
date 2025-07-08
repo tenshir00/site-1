@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Mail } from 'lucide-react';
 
 interface SidebarProps {
@@ -10,6 +10,7 @@ interface SidebarProps {
 
 const Sidebar = ({ currentView, onSectionChange, onPhotoClick }: SidebarProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleNavigation = (path: string, section: string) => {
     navigate(path);
@@ -20,6 +21,10 @@ const Sidebar = ({ currentView, onSectionChange, onPhotoClick }: SidebarProps) =
     navigate('/');
     onSectionChange('landing');
   };
+
+  // Check if we're on a post page (not a main route)
+  const isPostPage = !['/', '/about', '/projects', '/writing'].includes(location.pathname);
+  const displayCurrentView = isPostPage ? 'writing' : currentView;
 
   return (
     <>
@@ -37,7 +42,7 @@ const Sidebar = ({ currentView, onSectionChange, onPhotoClick }: SidebarProps) =
             <button
               onClick={() => handleNavigation('/about', 'about')}
               className={`block w-full text-left transition-colors ${
-                currentView === 'about' 
+                displayCurrentView === 'about' 
                   ? 'text-[#BF5700]' 
                   : 'text-gray-600 hover:text-[#BF5700]'
               }`}
@@ -47,7 +52,7 @@ const Sidebar = ({ currentView, onSectionChange, onPhotoClick }: SidebarProps) =
             <button
               onClick={() => handleNavigation('/writing', 'writing')}
               className={`block w-full text-left transition-colors ${
-                currentView === 'writing' 
+                displayCurrentView === 'writing' 
                   ? 'text-[#BF5700]' 
                   : 'text-gray-600 hover:text-[#BF5700]'
               }`}
@@ -57,7 +62,7 @@ const Sidebar = ({ currentView, onSectionChange, onPhotoClick }: SidebarProps) =
             <button
               onClick={() => handleNavigation('/projects', 'projects')}
               className={`block w-full text-left transition-colors ${
-                currentView === 'projects' 
+                displayCurrentView === 'projects' 
                   ? 'text-[#BF5700]' 
                   : 'text-gray-600 hover:text-[#BF5700]'
               }`}
@@ -111,7 +116,7 @@ const Sidebar = ({ currentView, onSectionChange, onPhotoClick }: SidebarProps) =
             <button
               onClick={() => handleNavigation('/about', 'about')}
               className={`transition-colors ${
-                currentView === 'about' 
+                displayCurrentView === 'about' 
                   ? 'text-[#BF5700] font-medium' 
                   : 'text-gray-600 hover:text-[#BF5700]'
               }`}
@@ -122,7 +127,7 @@ const Sidebar = ({ currentView, onSectionChange, onPhotoClick }: SidebarProps) =
             <button
               onClick={() => handleNavigation('/writing', 'writing')}
               className={`transition-colors ${
-                currentView === 'writing' 
+                displayCurrentView === 'writing' 
                   ? 'text-[#BF5700] font-medium' 
                   : 'text-gray-600 hover:text-[#BF5700]'
               }`}
@@ -133,7 +138,7 @@ const Sidebar = ({ currentView, onSectionChange, onPhotoClick }: SidebarProps) =
             <button
               onClick={() => handleNavigation('/projects', 'projects')}
               className={`transition-colors ${
-                currentView === 'projects' 
+                displayCurrentView === 'projects' 
                   ? 'text-[#BF5700] font-medium' 
                   : 'text-gray-600 hover:text-[#BF5700]'
               }`}

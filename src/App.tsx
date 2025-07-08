@@ -75,15 +75,12 @@ useEffect(() => {
 
   // Check if we're on a writing-related route or post route
   const isWritingRoute = location.pathname.startsWith('/writing');
-  const isPostRoute = location.pathname !== '/' && 
-                     location.pathname !== '/about' && 
-                     location.pathname !== '/projects' && 
-                     location.pathname !== '/writing';
+  const isPostRoute = !['/', '/about', '/projects', '/writing'].includes(location.pathname);
   const isMainRoute = ['/', '/about', '/projects', '/writing'].includes(location.pathname);
 
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
-      {isMainRoute && (
+      {(isMainRoute || isPostRoute) && (
         <Sidebar 
           currentView={actualCurrentView}
           onSectionChange={handleSectionChange}
@@ -91,11 +88,11 @@ useEffect(() => {
         />
       )}
       
-      <main className={isMainRoute ? "md:ml-48" : ""}>
+      <main className={(isMainRoute || isPostRoute) ? "md:ml-48" : ""}>
         <Routes>
           <Route path="/" element={
-            <div className={isMainRoute ? 'md:pt-8 md:pb-0 md:pl-12 md:pr-8 pt-4 px-4' : ''}>
-              <div className={isMainRoute ? 'md:max-w-5xl' : ''}>
+            <div className='md:pt-8 md:pb-0 md:pl-12 md:pr-8 pt-4 px-4'>
+              <div className='md:max-w-5xl'>
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -125,8 +122,8 @@ useEffect(() => {
           } />
           
           <Route path="/about" element={
-            <div className="md:p-8 md:pl-12 p-4">
-              <div className="md:max-w-5xl">
+            <div className='md:p-8 md:pl-12 p-4'>
+              <div className='md:max-w-5xl'>
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -139,8 +136,8 @@ useEffect(() => {
           } />
           
           <Route path="/writing" element={
-            <div className="md:p-8 md:pl-12 p-4">
-              <div className="md:max-w-5xl">
+            <div className='md:p-8 md:pl-12 p-4'>
+              <div className='md:max-w-5xl'>
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -153,8 +150,8 @@ useEffect(() => {
           } />
           
           <Route path="/projects" element={
-            <div className="md:p-8 md:pl-12 p-4">
-              <div className="md:max-w-5xl">
+            <div className='md:p-8 md:pl-12 p-4'>
+              <div className='md:max-w-5xl'>
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
