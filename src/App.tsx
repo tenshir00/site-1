@@ -80,7 +80,7 @@ useEffect(() => {
 
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
-      {(isMainRoute || isPostRoute) && (
+      {isMainRoute && (
         <Sidebar 
           currentView={actualCurrentView}
           onSectionChange={handleSectionChange}
@@ -88,7 +88,7 @@ useEffect(() => {
         />
       )}
       
-      <main className={(isMainRoute || isPostRoute) ? "md:ml-48" : ""}>
+      <main className={isMainRoute ? "md:ml-48" : ""}>
         <Routes>
           <Route path="/" element={
             <div className='md:pt-8 md:pb-0 md:pl-12 md:pr-8 pt-4 px-4'>

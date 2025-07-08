@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import Sidebar from './Sidebar';
 import { PostService } from '../services/postService';
 import { Post } from '../types/Post';
 
@@ -69,21 +70,28 @@ const PostView = () => {
 
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
+      {/* Sidebar for universal access */}
+      <Sidebar 
+        currentView="writing"
+        onSectionChange={() => {}}
+        onPhotoClick={() => navigate('/about')}
+      />
+      
       {/* Main content */}
-      <div>
+      <div className="md:ml-48">
         <div className="max-w-4xl md:px-4 md:py-8 px-4 py-4">
           {/* Header with back button */}
-          <div className="mb-6 md:-mt-2 flex items-start space-x-4">
+          <div className="mb-6 md:-mt-2 flex items-start space-x-4 md:ml-4">
             {/* Back button positioned to the left */}
             <button
               onClick={() => navigate('/writing')}
-              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1"
+              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1 md:-ml-8"
             >
               <ArrowLeft size={20} />
             </button>
             
             {/* Header content */}
-            <div className="flex-1">
+            <div className="flex-1 md:-ml-4">
             <h1 className="md:text-4xl text-3xl font-bold text-gray-900 mb-6">
               {post.title}
             </h1>
@@ -102,7 +110,7 @@ const PostView = () => {
           </div>
 
           {/* Meta information - show all categories */}
-          <div className="flex items-center space-x-4 mb-8 pb-6">
+          <div className="flex items-center space-x-4 mb-8 pb-6 md:ml-4">
             {/* Show all categories if available, otherwise show primary category */}
             {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 ? (
               <div className="flex items-center space-x-3">
@@ -135,7 +143,7 @@ const PostView = () => {
           </div>
 
           {/* Main body content */}
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-lg max-w-none md:ml-4">
             <div 
               className="text-gray-800 leading-relaxed"
               style={{ 
