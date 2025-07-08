@@ -97,21 +97,21 @@ const Writing = () => {
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
           Writing
         </h2>
-        <p className="text-gray-600 mb-8">
+        <p className="text-gray-600 mb-8 text-sm md:text-base">
           Field notes on finance, technology, and digital life.
         </p>
         
-        <div className="flex space-x-6 mb-8">
+        <div className="flex flex-wrap gap-x-4 gap-y-2 mb-8">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => handleCategoryClick(category.id)}
               onMouseEnter={() => setHoveredCategory(category.id)}
               onMouseLeave={() => setHoveredCategory(null)}
-              className="flex items-center space-x-2 text-gray-500 hover:text-gray-900 transition-colors"
+              className="flex items-center space-x-2 text-gray-500 hover:text-gray-900 transition-colors text-sm md:text-base"
             >
               <div 
-                className={`w-3 h-3 rounded-full border-2 transition-all duration-200`}
+                className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-full border-2 transition-all duration-200`}
                 style={{ 
                   backgroundColor: (selectedCategory === category.id || hoveredCategory === category.id) 
                     ? category.color 
@@ -119,7 +119,7 @@ const Writing = () => {
                   borderColor: category.color
                 }}
               ></div>
-              <span>— {category.name}</span>
+              <span>{category.name}</span>
             </button>
           ))}
         </div>
