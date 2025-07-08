@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import Sidebar from './Sidebar';
+import { ArrowLeft, Mail } from 'lucide-react';
 import { PostService } from '../services/postService';
 import { Post } from '../types/Post';
 
@@ -67,6 +66,14 @@ const PostView = () => {
     }
   };
 
+  const handleLogoClick = () => {
+    navigate('/');
+  };
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F4F3EF] flex items-center justify-center">
@@ -95,28 +102,150 @@ const PostView = () => {
 
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
-      {/* Sidebar for universal access */}
-      <Sidebar 
-        currentView="writing"
-        onSectionChange={() => {}}
-        onPhotoClick={() => navigate('/about')}
-      />
+      {/* Desktop Sidebar */}
+      <div className="hidden md:flex fixed left-0 top-0 w-48 h-full bg-[#F4F3EF] p-6 flex-col">
+        <div className="mb-8">
+          <button 
+            onClick={handleLogoClick}
+            className="text-xl font-medium text-gray-900 mb-6 hover:text-[#BF5700] transition-colors"
+          >
+            Angel Zepeda
+          </button>
+          
+          <nav className="space-y-2">
+            <button
+              onClick={() => handleNavigation('/about')}
+              className="block w-full text-left text-gray-600 hover:text-[#BF5700] transition-colors"
+            >
+              → About
+            </button>
+            <button
+              onClick={() => handleNavigation('/writing')}
+              className="block w-full text-left text-[#BF5700]"
+            >
+              → Writing
+            </button>
+            <button
+              onClick={() => handleNavigation('/projects')}
+              className="block w-full text-left text-gray-600 hover:text-[#BF5700] transition-colors"
+            >
+              → Projects
+            </button>
+          </nav>
+        </div>
+        
+        <div className="flex space-x-3 mb-8">
+          <a 
+            href="https://www.linkedin.com/in/zepangel/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-[#BF5700] transition-colors"
+          >
+            <img 
+              src="/linkedin.png" 
+              alt="LinkedIn" 
+              className="w-[18px] h-[18px] opacity-60 hover:opacity-100 transition-opacity"
+            />
+          </a>
+          <a 
+            href="mailto:azcareers00@gmail.com"
+            className="text-gray-400 hover:text-[#BF5700] transition-colors"
+          >
+            <Mail size={18} />
+          </a>
+        </div>
+        
+        <div className="mt-auto">
+          <p className="text-sm text-gray-500">ATX 2025</p>
+        </div>
+      </div>
+
+      {/* Mobile Top Toolbar */}
+      <div className="md:hidden bg-[#F4F3EF] w-full">
+        {/* Name row */}
+        <div className="text-center py-4 border-b border-gray-200">
+          <button 
+            onClick={handleLogoClick}
+            className="text-xl font-medium text-gray-900 hover:text-[#BF5700] transition-colors"
+          >
+            Angel Zepeda
+          </button>
+        </div>
+        
+        {/* Navigation row */}
+        <div className="flex justify-center items-center py-3 border-b border-gray-200">
+          <nav className="flex space-x-6">
+            <button
+              onClick={() => handleNavigation('/about')}
+              className="text-gray-600 hover:text-[#BF5700] transition-colors"
+            >
+              About
+            </button>
+            <span className="text-gray-300">|</span>
+            <button
+              onClick={() => handleNavigation('/writing')}
+              className="text-[#BF5700] font-medium"
+            >
+              Writing
+            </button>
+            <span className="text-gray-300">|</span>
+            <button
+              onClick={() => handleNavigation('/projects')}
+              className="text-gray-600 hover:text-[#BF5700] transition-colors"
+            >
+              Projects
+            </button>
+          </nav>
+        </div>
+        
+        {/* Social buttons row with back button */}
+        <div className="flex justify-center items-center py-3 space-x-4">
+          <button
+            onClick={() => navigate('/writing')}
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors"
+          >
+            <ArrowLeft size={18} />
+            <span className="text-sm">Back</span>
+          </button>
+          <span className="text-gray-300">|</span>
+          <a 
+            href="https://www.linkedin.com/in/zepangel/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors"
+          >
+            <img 
+              src="/linkedin.png" 
+              alt="LinkedIn" 
+              className="w-[18px] h-[18px] opacity-60 hover:opacity-100 transition-opacity"
+            />
+            <span className="text-sm">LinkedIn</span>
+          </a>
+          <a 
+            href="mailto:azcareers00@gmail.com"
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors"
+          >
+            <Mail size={18} />
+            <span className="text-sm">Email</span>
+          </a>
+        </div>
+      </div>
       
       {/* Main content */}
       <div className="md:ml-48">
         <div className="max-w-4xl md:px-4 md:py-8 px-4 py-4">
-          {/* Header with back button */}
-          <div className="mb-6 md:-mt-2 flex items-start space-x-4 md:ml-4">
+          {/* Desktop: Header with back button */}
+          <div className="hidden md:flex mb-6 -mt-2 items-start space-x-4 ml-4">
             {/* Back button positioned to the left */}
             <button
               onClick={() => navigate('/writing')}
-              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1 md:-ml-8 flex-shrink-0"
+              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1 -ml-8 flex-shrink-0"
             >
               <ArrowLeft size={20} />
             </button>
             
             {/* Header content */}
-            <div className="flex-1 md:-ml-4 min-w-0">
+            <div className="flex-1 -ml-4 min-w-0">
               {/* Title with responsive font sizing to fit one line */}
               <h1 className="font-bold text-gray-900 mb-6 leading-tight break-words
                 text-xl sm:text-2xl md:text-3xl lg:text-4xl
@@ -138,8 +267,30 @@ const PostView = () => {
             </div>
           </div>
 
-          {/* Meta information - aligned with title/subheader start */}
-          <div className="flex items-center space-x-4 mb-8 pb-6 ml-8 md:ml-4">
+          {/* Mobile: Header without back button (back button is in toolbar) */}
+          <div className="md:hidden mb-6">
+            {/* Title with responsive font sizing to fit one line */}
+            <h1 className="font-bold text-gray-900 mb-6 leading-tight break-words
+              text-xl sm:text-2xl
+              max-w-full overflow-hidden">
+              {post.title}
+            </h1>
+            
+            {/* Show subheader if available */}
+            {post.subheader && (
+              <p className="text-gray-600 leading-relaxed mb-4 text-base"
+                 style={{ 
+                   lineHeight: '1.7',
+                   fontFamily: '"Monument Grotesk Variable", -apple-system, BlinkMacSystemFont, sans-serif',
+                   fontWeight: '400'
+                 }}>
+                {post.subheader}
+              </p>
+            )}
+          </div>
+
+          {/* Meta information - aligned with title/subheader start (flush with body) */}
+          <div className="flex items-center space-x-4 mb-8 pb-6 md:ml-4">
             {/* Show all categories if available, otherwise show primary category */}
             {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 ? (
               <div className="flex items-center space-x-3">
