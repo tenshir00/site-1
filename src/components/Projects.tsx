@@ -40,7 +40,7 @@ const Projects = () => {
           Projects
         </h2>
         <p className="text-gray-600 mb-8">
-          Selected work and experiments in software development.
+          Selected projects and experiments in technology, finance, and business consulting.
         </p>
       </div>
       
