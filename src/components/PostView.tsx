@@ -42,6 +42,31 @@ const PostView = () => {
     return categoryMap[category as keyof typeof categoryMap] || '#757575';
   };
 
+  const formatDate = (dateString: string) => {
+    try {
+      // Handle both ISO strings and already formatted dates
+      const date = new Date(dateString);
+      
+      // Check if date is valid
+      if (isNaN(date.getTime())) {
+        // If it's already a formatted string like "January 2024", return as is
+        if (dateString && typeof dateString === 'string') {
+          return dateString;
+        }
+        return 'Date unavailable';
+      }
+      
+      return date.toLocaleDateString('en-US', { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+      });
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return 'Date unavailable';
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F4F3EF] flex items-center justify-center">
@@ -85,32 +110,36 @@ const PostView = () => {
             {/* Back button positioned to the left */}
             <button
               onClick={() => navigate('/writing')}
-              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1 md:-ml-8"
+              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1 md:-ml-8 flex-shrink-0"
             >
               <ArrowLeft size={20} />
             </button>
             
             {/* Header content */}
-            <div className="flex-1 md:-ml-4">
-            <h1 className="md:text-4xl text-3xl font-bold text-gray-900 mb-6">
-              {post.title}
-            </h1>
-            {/* Show subheader if available */}
-            {post.subheader && (
-              <p className="text-gray-600 leading-relaxed" style={{ 
-                fontSize: window.innerWidth >= 768 ? '1.2rem' : '1.1rem', 
-                lineHeight: '1.7',
-                fontFamily: '"Monument Grotesk Variable", -apple-system, BlinkMacSystemFont, sans-serif',
-                fontWeight: '400'
-              }}>
-                {post.subheader}
-              </p>
-            )}
+            <div className="flex-1 md:-ml-4 min-w-0">
+              {/* Title with responsive font sizing to fit one line */}
+              <h1 className="font-bold text-gray-900 mb-6 leading-tight break-words
+                text-xl sm:text-2xl md:text-3xl lg:text-4xl
+                max-w-full overflow-hidden">
+                {post.title}
+              </h1>
+              
+              {/* Show subheader if available */}
+              {post.subheader && (
+                <p className="text-gray-600 leading-relaxed mb-4 text-base md:text-lg lg:text-xl"
+                   style={{ 
+                     lineHeight: '1.7',
+                     fontFamily: '"Monument Grotesk Variable", -apple-system, BlinkMacSystemFont, sans-serif',
+                     fontWeight: '400'
+                   }}>
+                  {post.subheader}
+                </p>
+              )}
             </div>
           </div>
 
-          {/* Meta information - show all categories */}
-          <div className="flex items-center space-x-4 mb-8 pb-6 md:ml-4">
+          {/* Meta information - aligned with title/subheader start */}
+          <div className="flex items-center space-x-4 mb-8 pb-6 ml-8 md:ml-4">
             {/* Show all categories if available, otherwise show primary category */}
             {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 ? (
               <div className="flex items-center space-x-3">
@@ -120,7 +149,7 @@ const PostView = () => {
                       className="w-2 h-2 rounded-full"
                       style={{ backgroundColor: getCategoryColor(category) }}
                     ></div>
-                    <span className="text-gray-600 capitalize">{category}</span>
+                    <span className="text-gray-600 capitalize text-sm md:text-base">{category}</span>
                   </div>
                 ))}
               </div>
@@ -130,15 +159,11 @@ const PostView = () => {
                   className="w-2 h-2 rounded-full"
                   style={{ backgroundColor: getCategoryColor(post.category) }}
                 ></div>
-                <span className="text-gray-600 capitalize">{post.category}</span>
+                <span className="text-gray-600 capitalize text-sm md:text-base">{post.category}</span>
               </div>
             )}
-            <span className="text-gray-600">
-              {new Date(post.created_at || post.date).toLocaleDateString('en-US', { 
-                month: 'long', 
-                day: 'numeric', 
-                year: 'numeric' 
-              })}
+            <span className="text-gray-600 text-sm md:text-base">
+              {formatDate(post.created_at || post.date)}
             </span>
           </div>
 
@@ -158,9 +183,9 @@ const PostView = () => {
                   .replace(/\n/g, '<br>')
                   .replace(/^/, '<p class="mb-6">')
                   .replace(/$/, '</p>')
-                  .replace(/# (.*?)<\/p>/g, '<h1 class="text-3xl font-bold mt-12 mb-6 text-gray-900">$1</h1>')
-                  .replace(/## (.*?)<\/p>/g, '<h2 class="text-2xl font-semibold mt-10 mb-5 text-gray-900">$2</h2>')
-                  .replace(/### (.*?)<\/p>/g, '<h3 class="text-xl font-medium mt-8 mb-4 text-gray-900">$3</h3>')
+                  .replace(/# (.*?)<\/p>/g, '<h1 class="text-2xl md:text-3xl font-bold mt-12 mb-6 text-gray-900">$1</h1>')
+                  .replace(/## (.*?)<\/p>/g, '<h2 class="text-xl md:text-2xl font-semibold mt-10 mb-5 text-gray-900">$2</h2>')
+                  .replace(/### (.*?)<\/p>/g, '<h3 class="text-lg md:text-xl font-medium mt-8 mb-4 text-gray-900">$3</h3>')
                   .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
                   .replace(/\*(.*?)\*/g, '<em class="italic">$1</em>')
               }}
