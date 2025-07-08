@@ -104,7 +104,7 @@ useEffect(() => {
                   {/* Mobile photo for landing page */}
                   <div className="md:hidden flex justify-center pt-6">
                     <div 
-                      className="w-80 h-60 bg-gray-200 overflow-hidden cursor-pointer group relative"
+                      className="w-80 h-96 bg-gray-200 overflow-hidden cursor-pointer group relative"
                       onClick={handlePhotoClick}
                     >
                       <img 
