@@ -51,31 +51,23 @@ useEffect(() => {
   };
 
   const renderLandingContent = () => (
-    <div className="flex items-start h-screen pl-8 pt-2 overflow-hidden">
+    <div className="flex items-start h-screen pl-8 pt-2">
       <div 
-        className="w-full max-w-[1200px] h-[600px] bg-gray-200 overflow-hidden cursor-pointer group relative"
+        className="w-[1200px] h-[600px] bg-gray-200 overflow-hidden cursor-pointer group relative"
         onClick={handlePhotoClick}
-        style={{
-          maxHeight: 'calc(100vh - 100px)', // Ensure photo doesn't exceed viewport height
-          aspectRatio: '2/1' // Maintain aspect ratio
-        }}
       >
         {/* Large screen image - crops from left as window shrinks */}
         <img 
           src="/ut_austin copy.jpg" 
           alt="UT Austin Campus" 
-          className="hidden lg:block w-full h-full object-contain object-center grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
-          style={{
-            objectFit: window.innerWidth < 1400 ? 'contain' : 'cover',
-            objectPosition: window.innerWidth < 1400 ? 'center' : 'right'
-          }}
+          className="hidden lg:block w-full h-full object-cover object-right grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
         />
         
         {/* Small screen image - shows when layout forces photo to bottom */}
         <img 
           src="/tower.jpg" 
           alt="UT Austin Tower" 
-          className="block lg:hidden w-full h-full object-contain object-center grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+          className="block lg:hidden w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
         />
       </div>
     </div>
@@ -112,17 +104,13 @@ useEffect(() => {
                   {/* Mobile photo for landing page */}
                   <div className="md:hidden flex justify-center pt-6">
                     <div 
-                      className="w-full max-w-sm bg-gray-200 overflow-hidden cursor-pointer group relative"
+                      className="w-80 h-96 bg-gray-200 overflow-hidden cursor-pointer group relative"
                       onClick={handlePhotoClick}
-                      style={{
-                        height: 'min(70vh, 400px)', // Responsive height that doesn't exceed viewport
-                        aspectRatio: '3/4' // Maintain mobile aspect ratio
-                      }}
                     >
                       <img 
                         src="/tower.jpg" 
                         alt="UT Austin Tower" 
-                        className="w-full h-full object-contain object-center grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                        className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
                       />
                     </div>
                   </div>
