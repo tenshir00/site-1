@@ -70,7 +70,7 @@ const PostView = () => {
   return (
     <div className="min-h-screen bg-[#F4F3EF]">
       {/* Sidebar */}
-      <div className="fixed left-0 top-0 w-48 h-full bg-[#F4F3EF] p-6 flex flex-col">
+      <div className="hidden md:flex fixed left-0 top-0 w-48 h-full bg-[#F4F3EF] p-6 flex-col">
         <div className="mb-8">
           <button 
             onClick={() => navigate('/')}
@@ -130,28 +130,94 @@ const PostView = () => {
         </div>
       </div>
 
+      {/* Mobile Top Toolbar for PostView */}
+      <div className="md:hidden bg-[#F4F3EF] w-full">
+        {/* Name row */}
+        <div className="text-center py-4 border-b border-gray-200">
+          <button 
+            onClick={() => navigate('/')}
+            className="text-xl font-medium text-gray-900 hover:text-[#BF5700] transition-colors"
+          >
+            Angel Zepeda
+          </button>
+        </div>
+        
+        {/* Navigation row */}
+        <div className="flex justify-center items-center py-3 border-b border-gray-200">
+          <nav className="flex space-x-6">
+            <button
+              onClick={() => navigate('/about')}
+              className="text-gray-600 hover:text-[#BF5700] transition-colors"
+            >
+              About
+            </button>
+            <span className="text-gray-300">|</span>
+            <button
+              onClick={() => navigate('/writing')}
+              className="text-[#BF5700] font-medium"
+            >
+              Writing
+            </button>
+            <span className="text-gray-300">|</span>
+            <button
+              onClick={() => navigate('/projects')}
+              className="text-gray-600 hover:text-[#BF5700] transition-colors"
+            >
+              Projects
+            </button>
+          </nav>
+        </div>
+        
+        {/* Social buttons row */}
+        <div className="flex justify-center items-center py-3 space-x-4">
+          <a 
+            href="https://www.linkedin.com/in/zepangel/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors"
+          >
+            <img 
+              src="/linkedin.png" 
+              alt="LinkedIn" 
+              className="w-[18px] h-[18px] opacity-60 hover:opacity-100 transition-opacity"
+            />
+            <span className="text-sm">LinkedIn</span>
+          </a>
+          <a 
+            href="mailto:azcareers00@gmail.com"
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <span className="text-sm">Email</span>
+          </a>
+        </div>
+      </div>
+
       {/* Main content */}
-      <div className="ml-48">
-        <div className="max-w-4xl px-4 py-8">
+      <div className="md:ml-48">
+        <div className="max-w-4xl md:px-4 md:py-8 px-4 py-4">
           {/* Header with back button */}
-          <div className="mb-6 -mt-2 flex items-start space-x-4 ml-4">
+          <div className="mb-6 md:-mt-2 flex items-start space-x-4 md:ml-4">
             {/* Back button positioned to the left */}
             <button
               onClick={() => navigate('/writing')}
-              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1 -ml-8"
+              className="text-gray-600 hover:text-[#BF5700] transition-colors mt-1 md:-ml-8"
             >
               <ArrowLeft size={20} />
             </button>
             
             {/* Header content */}
-            <div className="flex-1 -ml-4">
-            <h1 className="text-4xl font-bold text-gray-900 mb-6">
+            <div className="flex-1 md:-ml-4">
+            <h1 className="md:text-4xl text-3xl font-bold text-gray-900 mb-6">
               {post.title}
             </h1>
             {/* Show subheader if available */}
             {post.subheader && (
               <p className="text-gray-600 leading-relaxed" style={{ 
-                fontSize: '1.2rem', 
+                fontSize: window.innerWidth >= 768 ? '1.2rem' : '1.1rem', 
                 lineHeight: '1.7',
                 fontFamily: '"Monument Grotesk Variable", -apple-system, BlinkMacSystemFont, sans-serif',
                 fontWeight: '400'
@@ -163,7 +229,7 @@ const PostView = () => {
           </div>
 
           {/* Meta information - show all categories */}
-          <div className="flex items-center space-x-4 mb-8 pb-6 ml-4">
+          <div className="flex items-center space-x-4 mb-8 pb-6 md:ml-4">
             {/* Show all categories if available, otherwise show primary category */}
             {post.allCategories && post.allCategories.filter(cat => cat !== 'mixed').length > 0 ? (
               <div className="flex items-center space-x-3">
@@ -196,11 +262,11 @@ const PostView = () => {
           </div>
 
           {/* Main body content */}
-          <div className="prose prose-lg max-w-none ml-4">
+          <div className="prose prose-lg max-w-none md:ml-4">
             <div 
               className="text-gray-800 leading-relaxed"
               style={{ 
-                fontSize: '1.2rem', 
+                fontSize: window.innerWidth >= 768 ? '1.2rem' : '1.1rem', 
                 lineHeight: '1.7',
                 fontFamily: '"Monument Grotesk Variable", -apple-system, BlinkMacSystemFont, sans-serif',
                 fontWeight: '400'

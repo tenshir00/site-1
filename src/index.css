@@ -62,13 +62,5 @@ textarea:focus {
 
 /* Responsive design */
 @media (max-width: 768px) {
-  .ml-48 {
-    margin-left: 0;
-  }
-  
-  .fixed.left-0 {
-    position: relative;
-    width: 100%;
-    height: auto;
-  }
+  /* Mobile-specific styles are now handled by Tailwind responsive classes */
 }

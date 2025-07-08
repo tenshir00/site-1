@@ -91,25 +91,42 @@ useEffect(() => {
         />
       )}
       
-      <main className={isMainRoute ? "ml-48" : ""}>
+      <main className={isMainRoute ? "md:ml-48" : ""}>
         <Routes>
           <Route path="/" element={
-            <div className={isMainRoute ? 'pt-8 pb-0 pl-12 pr-8' : ''}>
-              <div className={isMainRoute ? 'max-w-5xl' : ''}>
+            <div className={isMainRoute ? 'md:pt-8 md:pb-0 md:pl-12 md:pr-8 pt-4 px-4' : ''}>
+              <div className={isMainRoute ? 'md:max-w-5xl' : ''}>
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
                     : 'opacity-100 transform translate-y-0'
                 }`}>
-                  {renderLandingContent()}
+                  {/* Mobile photo for landing page */}
+                  <div className="md:hidden flex justify-center pt-6">
+                    <div 
+                      className="w-80 h-60 bg-gray-200 overflow-hidden cursor-pointer group relative"
+                      onClick={handlePhotoClick}
+                    >
+                      <img 
+                        src="/tower.jpg" 
+                        alt="UT Austin Tower" 
+                        className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Desktop content */}
+                  <div className="hidden md:block">
+                    {renderLandingContent()}
+                  </div>
                 </div>
               </div>
             </div>
           } />
           
           <Route path="/about" element={
-            <div className="p-8 pl-12">
-              <div className="max-w-5xl">
+            <div className="md:p-8 md:pl-12 p-4">
+              <div className="md:max-w-5xl">
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -122,8 +139,8 @@ useEffect(() => {
           } />
           
           <Route path="/writing" element={
-            <div className="p-8 pl-12">
-              <div className="max-w-5xl">
+            <div className="md:p-8 md:pl-12 p-4">
+              <div className="md:max-w-5xl">
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 
@@ -136,8 +153,8 @@ useEffect(() => {
           } />
           
           <Route path="/projects" element={
-            <div className="p-8 pl-12">
-              <div className="max-w-5xl">
+            <div className="md:p-8 md:pl-12 p-4">
+              <div className="md:max-w-5xl">
                 <div className={`transition-all duration-1000 ${
                   isTransitioning 
                     ? 'opacity-0 transform translate-y-4' 

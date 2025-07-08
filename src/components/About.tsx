@@ -6,14 +6,15 @@ const About = () => {
       {/* Header */}
       <div className="pb-6">
         <h1 className="text-2xl font-bold text-gray-900 -ml-8">
+        <h1 className="text-2xl font-bold text-gray-900 md:-ml-8">
           About Angel Zepeda
         </h1>
       </div>
 
       {/* Two Column Layout - adjusted spacing to match screenshot */}
-      <div className="grid grid-cols-2 gap-16">
+      <div className="grid md:grid-cols-2 grid-cols-1 md:gap-16 gap-8">
         {/* Left Column - Details - positioned closer to match screenshot */}
-        <div className="space-y-6 -ml-8">
+        <div className="space-y-6 md:-ml-8">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Location:
