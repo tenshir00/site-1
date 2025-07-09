@@ -43,18 +43,19 @@ const PostView = () => {
 
   const formatDate = (dateString: string) => {
     try {
-      // Handle both ISO strings and already formatted dates
-      const date = new Date(dateString);
+      // First try to parse as ISO string (from database)
+      let date = new Date(dateString);
       
       // Check if date is valid
       if (isNaN(date.getTime())) {
-        // If it's already a formatted string like "January 2024", return as is
-        if (dateString && typeof dateString === 'string') {
+        // If parsing failed, it might be a pre-formatted string like "January 2024"
+        if (dateString && typeof dateString === 'string' && dateString.includes(' ')) {
           return dateString;
         }
         return 'Date unavailable';
       }
       
+      // Format the date consistently
       return date.toLocaleDateString('en-US', { 
         month: 'long', 
         day: 'numeric', 

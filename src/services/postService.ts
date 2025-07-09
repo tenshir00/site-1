@@ -161,11 +161,22 @@ export class PostService {
       }
     }
 
-    // Format date
-    const date = new Date(dbPost.created_at).toLocaleDateString('en-US', { 
-      month: 'long', 
-      year: 'numeric' 
-    })
+    // Format date - use created_at from database, not the old date field
+    let formattedDate = 'Date unavailable';
+    if (dbPost.created_at) {
+      try {
+        const date = new Date(dbPost.created_at);
+        if (!isNaN(date.getTime())) {
+          formattedDate = date.toLocaleDateString('en-US', { 
+            month: 'long', 
+            day: 'numeric',
+            year: 'numeric' 
+          });
+        }
+      } catch (error) {
+        console.error('Error formatting date:', error);
+      }
+    }
 
     // Use the preview field for description (shown on writing page)
     let description = ''
@@ -201,14 +212,15 @@ export class PostService {
       title: dbPost.title || 'Untitled',
       slug: postSlug,
       category: primaryCategory as Post['category'],
-      date,
+      date: formattedDate,
       description, // This is the preview text shown on writing page
       content: fullContent, // This is the full content (subheader + body) shown in article view
       tags: allCategoryNames, // Store all categories as tags for display
       published: true, // All posts in DB are considered published
       allCategories: allCategoryNames, // Add this for filtering
       subheader: dbPost.subheader || '', // Store subheader separately for article view
-      body: dbPost.body || '' // Store body separately for article view
+      body: dbPost.body || '', // Store body separately for article view
+      created_at: dbPost.created_at // Keep the raw timestamp for PostView to use
     }
   }
 }
