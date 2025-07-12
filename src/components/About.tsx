@@ -8,7 +8,7 @@ const About = () => {
       {/* Desktop Two Column Layout */}
       <div className="hidden md:grid md:grid-cols-2 md:gap-0">
         {/* Left Column - Details */}
-        <div className="space-y-6 md:-ml-32">
+        <div className="space-y-6 md:-ml-0">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Location:
