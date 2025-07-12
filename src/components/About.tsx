@@ -4,11 +4,6 @@ const About = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="pb-6 hidden md:block">
-        <h1 className="text-2xl font-bold text-gray-900 md:-ml-8">
-          About Angel Zepeda
-        </h1>
-      </div>
 
       {/* Desktop Two Column Layout */}
       <div className="hidden md:grid md:grid-cols-2 md:gap-16">
