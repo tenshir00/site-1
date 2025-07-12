@@ -6,7 +6,7 @@ const About = () => {
       {/* Header */}
 
       {/* Desktop Two Column Layout */}
-      <div className="hidden md:grid md:grid-cols-2 md:gap-32">
+      <div className="hidden md:grid md:grid-cols-2 md:gap-2">
         {/* Left Column - Details */}
         <div className="space-y-6 md:-ml-8">
           <div>
