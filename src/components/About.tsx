@@ -3,12 +3,11 @@ import React from 'react';
 const About = () => {
   return (
     <div className="space-y-8">
-      {/* Header */}
 
       {/* Desktop Two Column Layout */}
-      <div className="hidden md:grid md:grid-cols-2 md:gap-0">
+      <div className="hidden md:grid md:grid-cols-2 md:gap-16">
         {/* Left Column - Details */}
-        <div className="space-y-6 md:-ml-0">
+        <div className="space-y-6 md:-ml-8">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Location:
