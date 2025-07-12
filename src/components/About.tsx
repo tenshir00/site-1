@@ -6,9 +6,9 @@ const About = () => {
       {/* Header */}
 
       {/* Desktop Two Column Layout */}
-      <div className="hidden md:grid md:grid-cols-2 md:gap-2">
+      <div className="hidden md:grid md:grid-cols-2 md:gap-0">
         {/* Left Column - Details */}
-        <div className="space-y-6 md:-ml-8">
+        <div className="space-y-6 md:-ml-4">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               Location:
