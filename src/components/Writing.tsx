@@ -98,7 +98,7 @@ const Writing = () => {
           Writing
         </h2>
         <p className="text-gray-600 mb-8 text-sm md:text-base">
-          Field notes on finance, technology, and digital life.
+          <span className="line-clamp-2">Field notes on finance, technology, and digital life.</span>
         </p>
         
         <div className="flex flex-wrap gap-x-4 gap-y-2 mb-8">
