@@ -55,7 +55,7 @@ const Projects = () => {
           Projects
         </h2>
         <p className="text-gray-600 mb-8">
-          <span className="line-clamp-2">Selected projects and experiments in technology, finance, and business consulting.</span>
+          Selected projects and experiments in technology, finance, and business consulting.
         </p>
       </div>
       
@@ -93,7 +93,7 @@ const Projects = () => {
             )}
             
             {project.tags && project.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 overflow-hidden" style={{ maxHeight: '2rem' }}>
+              <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag, tagIndex) => (
                   <span 
                     key={tagIndex}
