@@ -140,7 +140,7 @@ const PostView = () => {
             href="https://www.linkedin.com/in/zepangel/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-[#BF5700] transition-colors"
+            className="text-gray-400 hover:text-[#BF5700] transition-colors hover:drop-shadow-[0_0_8px_rgba(191,87,0,0.6)]"
           >
             <img 
               src="/linkedin.png" 
@@ -149,8 +149,24 @@ const PostView = () => {
             />
           </a>
           <a 
+            href="https://x.com/angelzep_" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-[#BF5700] transition-colors hover:drop-shadow-[0_0_8px_rgba(191,87,0,0.6)]"
+          >
+            <svg 
+              width="18" 
+              height="18" 
+              viewBox="0 0 24 24" 
+              fill="currentColor"
+              className="opacity-60 hover:opacity-100 transition-opacity"
+            >
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <a 
             href="mailto:azcareers00@gmail.com"
-            className="text-gray-400 hover:text-[#BF5700] transition-colors"
+            className="text-gray-400 hover:text-[#BF5700] transition-colors hover:drop-shadow-[0_0_8px_rgba(191,87,0,0.6)]"
           >
             <Mail size={18} />
           </a>
@@ -213,7 +229,7 @@ const PostView = () => {
             href="https://www.linkedin.com/in/zepangel/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors"
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors hover:drop-shadow-[0_0_8px_rgba(191,87,0,0.6)]"
           >
             <img 
               src="/linkedin.png" 
@@ -223,8 +239,25 @@ const PostView = () => {
             <span className="text-sm">LinkedIn</span>
           </a>
           <a 
+            href="https://x.com/angelzep_" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors hover:drop-shadow-[0_0_8px_rgba(191,87,0,0.6)]"
+          >
+            <svg 
+              width="18" 
+              height="18" 
+              viewBox="0 0 24 24" 
+              fill="currentColor"
+              className="opacity-60 hover:opacity-100 transition-opacity"
+            >
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            <span className="text-sm">X</span>
+          </a>
+          <a 
             href="mailto:azcareers00@gmail.com"
-            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors"
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#BF5700] transition-colors hover:drop-shadow-[0_0_8px_rgba(191,87,0,0.6)]"
           >
             <Mail size={18} />
             <span className="text-sm">Email</span>
